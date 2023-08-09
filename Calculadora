@@ -1,0 +1,26 @@
+#include <iostream>
+
+using namespace std;
+
+int main()
+{
+    float Valor1, Valor2, suma, resta, multiplicacion, Division, Resultado;
+    cout<<"Ingresar Valor1:";
+    cin>>Valor1;
+    cout<<"Ingresar Valor2:";
+    cin>>Valor2;
+    
+    suma= Valor1+ Valor2;
+    cout<<"El resultado de la suma es: "<<suma<<endl;
+    
+    resta= Valor1- Valor2;
+    cout<<"El resultado de la resta es: "<<resta<<endl;
+    
+    multiplicacion= Valor1 * Valor2;
+    cout<<"El resultado de la multiplicacion es: "<<multiplicacion<<endl;
+    
+    Division= Valor1 / Valor2;
+    cout<<"El resultado de la Divison es: "<<Division<<endl;
+
+    return 0;
+}
