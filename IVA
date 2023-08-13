@@ -1,0 +1,19 @@
+#include <iostream>
+
+using namespace std;
+
+int main()
+{
+    float sueldo, ValorIva=0.13;
+    cout<<"Ingrese sueldo: ";
+    cin>>sueldo;
+    if(sueldo>=2*2362){
+        ValorIva=sueldo*ValorIva;
+        cout<<"El valor del impuesto Iva es: "<<ValorIva;
+        }else{
+        ValorIva=0;
+        cout<<"No corresponde pagar Iva...";
+    }
+
+    return 0;
+}
