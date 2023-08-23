@@ -1,0 +1,23 @@
+#include <iostream>
+#include <cmath>
+using namespace std;
+
+int main()
+{
+    float a, b, c, d, x;
+    cout<<"Ingrese valor A: "<<endl;
+    cin>>a;
+    cout<<"Ingrese valor B: "<<endl;
+    cin>>b;
+    cout<<"Ingrese valor C: "<<endl;
+    cin>>c;
+    d=b*b-(4*a*c);
+    if(d==0){
+        x=-b/(2*a);
+        cout<<"El valor de X es: "<<x<<endl;
+    }else{ 
+        cout<<"La ecuacion tiene mas de una solucion X."<<endl;
+    }
+
+    return 0;
+}
