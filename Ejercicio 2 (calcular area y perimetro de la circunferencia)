@@ -1,0 +1,17 @@
+#include <iostream>
+#include <cmath>
+
+using namespace std;
+
+int main()
+{   double radio, area, perimetro;
+    cout<<"Ingrese su radio: ";
+    cin>>radio;
+    area= M_PI*pow(radio,2);
+    perimetro= 2*M_PI*radio;
+    cout<<"Su area es: "<<area<<endl;
+    cout<<"Su perimetro es: "<<perimetro<<endl;
+    
+
+    return 0;
+}
