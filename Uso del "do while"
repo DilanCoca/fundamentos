@@ -1,0 +1,30 @@
+#include <iostream>
+
+using namespace std;
+
+int main()
+{
+    string  nombrecliente;
+    int montopago,montoapagar;
+    cout<<"Ingrese nombre de cliente: "<<endl;
+    cin>>nombrecliente;
+    do{
+    cout<<"Ingrese el monto: "<<endl;
+    cin>>montopago;
+    }while (montopago<0);
+   
+    if(montopago<1000){
+        montoapagar=montopago;
+    }else if (montopago>1000 && montopago<=2000) {
+        montoapagar=montopago*0.80;
+    }else if (montopago>2000 && montopago<=4000) {
+        montoapagar=montopago*0.70;
+    }else if (montopago>4000){
+        montoapagar=montopago*0.5;
+    }
+    cout<<"El cliente "<<nombrecliente<<"debe pagar:"<<montoapagar<<endl;
+    
+    return 0;
+    
+    
+    }
