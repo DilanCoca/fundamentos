@@ -1,0 +1,22 @@
+#include <iostream>
+using namespace std;
+int main ()
+{
+    float t,suma;
+    int c,n;
+    c=1;
+    suma=0;
+    cout<<"Ingrese cantidad de numeros que desea sumar: "<<endl;
+    cin>>n;
+    while (c<=n){
+        cout<<"Ingrese numero "<<c<<endl;
+        cin>>t;
+        c++;
+        suma=suma+t;
+    }
+    
+     cout<<"El resultado de su suma es: "<<suma<<endl;
+     
+     return 0;
+    
+}
