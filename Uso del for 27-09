@@ -1,0 +1,31 @@
+#include <iostream>
+
+using namespace std;
+
+int main()
+{
+    int i,n,nota,nota2,nota3,acum,prom;
+    cout<<"Ingrese numero de alumnos: "<<endl;
+    cin>>n;
+    for(i=1;i<=n;i++)
+    {
+        cout<<"Alumno "<<i<<endl;
+        cout<<"                       "<<endl;
+        cout<<"Nota examen 1: ";
+        cin>>nota;
+        cout<<"Nota examen 2: ";
+        cin>>nota2;
+        cout<<"Nota examen 3: ";
+        cin>>nota3;
+        cout<<"                       "<<endl;
+        prom=((nota+nota2+nota3)/3);
+        cout<<"El promedio del alumno "<<i<<" es igual a: "<<prom<<endl;
+        
+    }
+      
+       
+  
+
+
+    return 0;
+}
