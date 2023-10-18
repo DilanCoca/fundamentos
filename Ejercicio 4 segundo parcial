@@ -1,0 +1,33 @@
+#include <iostream>
+#include <cmath>
+using namespace std;
+int perimetro(float r, float pi);
+int area(float r, float pi);
+int vol(float r, float pi);
+int main()
+{
+    float r, pi, p,a,v;
+    cout << "Ingrese el radio de la circunferencia: " << endl;
+    cin >> r;
+    pi = 3.1416;
+    cout << "El perimetro de la circunferencia es: " << perimetro(r, pi) << endl;
+    cout << "El area de la circunferencia es: " << area(r, pi) << endl;
+    cout << "El volumen de la circunferencia es: " << vol(r, pi) << endl;
+    return 0;
+}
+
+int perimetro(float r, float pi) {
+    float a;
+    a = 2 * pi * r;
+    return a;
+}
+int area(float r, float pi) {
+    float ar;
+    ar = pi * pow(r, 2);
+    return ar;
+}
+int vol(float r, float pi) {
+    float vol;
+    vol = (4 * pi * pow(r, 3))/3;
+    return vol;
+}
