@@ -1,0 +1,94 @@
+#include <iostream>
+#define max 1000
+using namespace std;
+
+void registrar(string productos[], float precio[], int &totalprod);
+float calcularPrecioTotal(float precio[], int totalprod);
+void mostrar(string productos[], float precio[], int cantidad);
+void encontrarProductoMasCaro(string productos[], float precio[], int totalprod);
+
+int main()
+{
+    int totalprod = 0;
+    string productos[max];
+    float precio[max];
+    int op;
+
+    do
+    {
+        cout << "MENU" << endl;
+        cout << "1. Registrar producto y precio" << endl;
+        cout << "2. Calcular precio total" << endl;
+        cout << "3. Encontrar el producto mas caro" << endl;
+        cout << "4. Mostrar lista de productos y precios" << endl;
+        cout << "0. Salir" << endl;
+
+        do
+        {
+            cout << "Elige una opción: ";
+            cin >> op;
+        } while (op > 4 || op < 0);
+
+        switch (op)
+        {
+        case 1:
+            registrar(productos, precio, totalprod);
+            break;
+        case 2:
+            cout << "El precio total es " << calcularPrecioTotal(precio, totalprod) << endl;
+            break;
+        case 3:
+            encontrarProductoMasCaro(productos, precio, totalprod);
+            break;
+        case 4:
+            mostrar(productos, precio, totalprod);
+            break;
+        case 0:
+            return 0;
+        }
+    } while (op != 0);
+
+    return 0;
+}
+
+void registrar(string productos[], float precio[], int &totalprod)
+{
+    cout << "Ingrese el nombre del producto: ";
+    getline(cin, productos[totalprod]);
+    cout << "Ingrese el precio del producto " << productos[totalprod] << ": ";
+    cin >> precio[totalprod];
+    totalprod++;
+}
+
+float calcularPrecioTotal(float precio[], int totalprod)
+{
+    float total = 0;
+    for (int i = 0; i < totalprod; i++)
+    {
+        total += precio[i];
+    }
+    return total;
+}
+
+void mostrar(string productos[], float precio[], int cantidad)
+{   cout<<"             LISTADO             "<<endl;
+    for (int i = 0; i < cantidad; i++)
+        cout << "El producto " << productos[i] << " cuesta: " << precio[i] << endl;
+}
+
+void encontrarProductoMasCaro(string productos[], float precio[], int totalprod)
+{
+    int indiceProductoMasCaro = 0;
+    float precioMasCaro = precio[0];
+
+    for (int i = 1; i < totalprod; i++)
+    {
+        if (precio[i] > precioMasCaro)
+        {
+            precioMasCaro = precio[i];
+            indiceProductoMasCaro = i;
+        }
+    }
+
+    cout << "El producto más caro es " << productos[indiceProductoMasCaro] << " con un precio de: " << precioMasCaro << endl;
+}
