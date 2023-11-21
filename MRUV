@@ -1,0 +1,81 @@
+#include <iostream>
+#include <cmath>
+
+using namespace std;
+
+
+float calcularVelocidadFinal(float velocidadInicial, float aceleracion, float tiempo);
+float calcularDesplazamiento(float velocidadInicial, float aceleracion, float tiempo);
+float calcularTiempo(float velocidadInicial, float aceleracion, float velocidadFinal);
+
+int main() {
+    float velocidadInicial, aceleracion, tiempo, velocidadFinal, desplazamiento;
+    int opcion;
+do{
+    cout << "¿Qué desea calcular en MRUV?" << endl;
+    cout << "1. Velocidad Final" << endl;
+    cout << "2. Desplazamiento" << endl;
+    cout << "3. Tiempo" << endl;
+    cout << "0. Salir" <<endl;
+    cout << "Seleccione la opción (1/2/3/0): ";
+    cin >> opcion;
+    
+    if((opcion<0)||(opcion>=4)){
+        cout<<"Ingrese una opcion valida..."<<endl;
+    }
+}while((opcion<0)||(opcion>=4));
+
+    switch (opcion) {
+        case 1:
+            cout << "Ingrese la velocidad inicial (m/s): ";
+            cin >> velocidadInicial;
+            cout << "Ingrese la aceleración (m/s^2): ";
+            cin >> aceleracion;
+            cout << "Ingrese el tiempo (segundos): ";
+            cin >> tiempo;
+            velocidadFinal = calcularVelocidadFinal(velocidadInicial, aceleracion, tiempo);
+            cout << "Velocidad Final: " << velocidadFinal << " m/s" << endl;
+            break;
+
+        case 2:
+            cout << "Ingrese la velocidad inicial (m/s): ";
+            cin >> velocidadInicial;
+            cout << "Ingrese la aceleración (m/s^2): ";
+            cin >> aceleracion;
+            cout << "Ingrese el tiempo (segundos): ";
+            cin >> tiempo;
+            desplazamiento = calcularDesplazamiento(velocidadInicial, aceleracion, tiempo);
+            cout << "Desplazamiento: " << desplazamiento << " metros" << endl;
+            break;
+
+        case 3:
+            cout << "Ingrese la velocidad inicial (m/s): ";
+            cin >> velocidadInicial;
+            cout << "Ingrese la aceleración (m/s^2): ";
+            cin >> aceleracion;
+            cout << "Ingrese la velocidad final (m/s): ";
+            cin >> velocidadFinal;
+            tiempo = calcularTiempo(velocidadInicial, aceleracion, velocidadFinal);
+            cout << "Tiempo: " << tiempo << " segundos" << endl;
+            break;
+
+        case 0:
+        cout<<"Muchas gracias...";
+            return 0;
+    }
+
+    return 0;
+}
+
+
+float calcularVelocidadFinal(float velocidadInicial, float aceleracion, float tiempo) {
+    return velocidadInicial + aceleracion * tiempo;
+}
+
+float calcularDesplazamiento(float velocidadInicial, float aceleracion, float tiempo) {
+    return velocidadInicial * tiempo + 0.5 * aceleracion * pow(tiempo, 2);
+}
+
+float calcularTiempo(float velocidadInicial, float aceleracion, float velocidadFinal) {
+    return (velocidadFinal - velocidadInicial) / aceleracion;
+}
