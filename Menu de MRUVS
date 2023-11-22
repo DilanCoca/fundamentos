@@ -1,0 +1,183 @@
+#include <iostream>
+#include <cmath>
+#include <conio.h>
+using namespace std;
+
+
+float calcularVelocidad(float distancia, float tiempo);
+float calcularDistancia(float velocidad, float tiempo);
+float calcularTiempo(float distancia, float velocidad);
+
+
+float calcularVelocidadFinal(float velocidadInicial, float aceleracion, float tiempo2);
+float calcularDesplazamiento(float velocidadInicial, float aceleracion, float tiempo2);
+float calcularTiempoMRUV(float velocidadInicial, float aceleracion, float velocidadFinal);
+
+void mecanica();
+
+int main()
+{
+    system("color 3F");
+    mecanica();
+    return 0;
+}
+
+
+
+void mecanica()
+{
+    float distancia, velocidad, velocidadInicial, aceleracion, tiempo, tiempo2, velocidadFinal, desplazamiento;
+    int opcion, opcion1, opcion2;
+
+    do {
+        cout << "\tMENU DE OPERACIONES\t" << endl;
+        cout << "Selecione la operacion que desea realizar" << endl;
+        cout << "1. Movimiento rectilineo uniforme." << endl;
+        cout << "2. Movimiento rectilineo uniformemente variado." << endl;
+        cout << "0. Salir." << endl;
+        cin >> opcion;
+
+        if ((opcion < 0) || (opcion >= 3)) {
+            cout << "Por favor Ingrese una opcion valida..." << endl;
+        }
+
+        switch (opcion) {
+        case 1:
+        {
+            do {
+                cout << "\tQue desea calcular en MRU?\t" << endl;
+                cout << "1. Velocidad." << endl;
+                cout << "2. Distancia." << endl;
+                cout << "3. Tiempo." << endl;
+                cout << "0. Volver al Menu Principal." << endl;
+                cout << "Seleccione la opcion (1/2/3/0): ";
+                cin >> opcion1;
+
+                switch (opcion1) {
+                case 1:
+                    cout << "Ingrese la distancia (metros): ";
+                    cin >> distancia;
+                    cout << "Ingrese el tiempo (segundos): ";
+                    cin >> tiempo;
+                    velocidad = calcularVelocidad(distancia, tiempo);
+                    cout << "Velocidad Media: " << velocidad << " m/s" << endl;
+                    break;
+
+                case 2:
+                    cout << "Ingrese la velocidad (m/s): ";
+                    cin >> velocidad;
+                    cout << "Ingrese el tiempo (segundos): ";
+                    cin >> tiempo;
+                    distancia = calcularDistancia(velocidad, tiempo);
+                    cout << "Distancia calculada: " << distancia << " metros" << endl;
+                    break;
+
+                case 3:
+                    cout << "Ingrese la distancia (metros): ";
+                    cin >> distancia;
+                    cout << "Ingrese la velocidad media (m/s): ";
+                    cin >> velocidad;
+                    tiempo = calcularTiempo(distancia, velocidad);
+                    cout << "Tiempo calculado: " << tiempo << " segundos" << endl;
+                    break;
+
+                case 0:
+
+                    break;
+
+                default:
+                    cout << "Ingrese una opcion valida..." << endl;
+                }
+            } while (opcion1 != 0);
+            break;
+        }
+
+        case 2:
+        {
+            do {
+                cout << "\tQue desea calcular en MRUV?\t" << endl;
+                cout << "1. Velocidad Final" << endl;
+                cout << "2. Desplazamiento" << endl;
+                cout << "3. Tiempo" << endl;
+                cout << "0. Volver al Menu Principal." << endl;
+                cout << "Seleccione la opcion (1/2/3/0): ";
+                cin >> opcion2;
+
+                switch (opcion2) {
+                case 1:
+                    cout << "Ingrese la velocidad inicial (m/s): ";
+                    cin >> velocidadInicial;
+                    cout << "Ingrese la aceleracion (m/s^2): ";
+                    cin >> aceleracion;
+                    cout << "Ingrese el tiempo (segundos): ";
+                    cin >> tiempo2;
+                    velocidadFinal = calcularVelocidadFinal(velocidadInicial, aceleracion, tiempo2);
+                    cout << "Velocidad Final: " << velocidadFinal << " m/s" << endl;
+                    break;
+
+                case 2:
+                    cout << "Ingrese la velocidad inicial (m/s): ";
+                    cin >> velocidadInicial;
+                    cout << "Ingrese la aceleracion (m/s^2): ";
+                    cin >> aceleracion;
+                    cout << "Ingrese el tiempo (segundos): ";
+                    cin >> tiempo2;
+                    desplazamiento = calcularDesplazamiento(velocidadInicial, aceleracion, tiempo2);
+                    cout << "Desplazamiento: " << desplazamiento << " metros" << endl;
+                    break;
+
+                case 3:
+                    cout << "Ingrese la velocidad inicial (m/s): ";
+                    cin >> velocidadInicial;
+                    cout << "Ingrese la aceleracion (m/s^2): ";
+                    cin >> aceleracion;
+                    cout << "Ingrese la velocidad final (m/s): ";
+                    cin >> velocidadFinal;
+                    tiempo2 = calcularTiempoMRUV(velocidadInicial, aceleracion, velocidadFinal);
+                    cout << "Tiempo: " << tiempo2 << " segundos" << endl;
+                    break;
+
+                case 0:
+
+                    break;
+
+                default:
+                    cout << "Ingrese una opcion valida..." << endl;
+                }
+            } while (opcion2 != 0);
+            break;
+        }
+
+        case 0:
+            cout << "Programa finalizado..." << endl;
+            break;
+
+        default:
+            cout << "Ingrese una opcion valida..." << endl;
+        }
+    } while (opcion != 0);
+    return;
+}
+float calcularVelocidad(float distancia, float tiempo) {
+    return distancia / tiempo;
+}
+
+float calcularDistancia(float velocidad, float tiempo) {
+    return velocidad * tiempo;
+}
+
+float calcularTiempo(float distancia, float velocidad) {
+    return velocidad != 0 ? distancia / velocidad : 0;
+}
+
+float calcularVelocidadFinal(float velocidadInicial, float aceleracion, float tiempo2) {
+    return velocidadInicial + aceleracion * tiempo2;
+}
+
+float calcularDesplazamiento(float velocidadInicial, float aceleracion, float tiempo2) {
+    return velocidadInicial * tiempo2 + 0.5 * aceleracion * pow(tiempo2, 2);
+}
+
+float calcularTiempoMRUV(float velocidadInicial, float aceleracion, float velocidadFinal) {
+    return (velocidadFinal - velocidadInicial) / aceleracion;
+}
