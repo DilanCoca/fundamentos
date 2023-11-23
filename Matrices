@@ -1,0 +1,303 @@
+
+#include <iostream>
+#include <iomanip>
+#include <cmath>
+
+using namespace std;
+
+const int MAX_SIZE = 10;
+
+// Prototipos de funciones
+void mostrar_matriz(double matriz[MAX_SIZE][MAX_SIZE], int filas, int columnas);
+void matriz_traspuesta(int matriz[MAX_SIZE][MAX_SIZE], int filas, int columnas);
+bool calcular_inversa(int matriz[MAX_SIZE][MAX_SIZE], int filas, int columnas, double inversa[MAX_SIZE][MAX_SIZE]);
+void suma_matrices(int matriz1[MAX_SIZE][MAX_SIZE], int matriz2[MAX_SIZE][MAX_SIZE], int filas, int columnas);
+void multiplicacion_matrices(int matriz1[MAX_SIZE][MAX_SIZE], int matriz2[MAX_SIZE][MAX_SIZE], int filas1, int columnas1, int filas2, int columnas2);
+bool es_matriz_magica(int matriz[MAX_SIZE][MAX_SIZE], int n);
+void cargar_matriz_circular(int matriz[MAX_SIZE][MAX_SIZE], int n);
+void cargar_matriz_diagonales(int matriz[MAX_SIZE][MAX_SIZE], int n);
+double calcular_determinante(double matriz[MAX_SIZE][MAX_SIZE], int filas, int columnas);
+
+int main() {
+    int matriz_a[MAX_SIZE][MAX_SIZE];
+    int matriz_b[MAX_SIZE][MAX_SIZE];
+    int filas, columnas;
+
+    cout << "Ingrese el tamaño de la matriz cuadrada (filas y columnas): ";
+    cin >> filas;
+
+    // Se asume que ambas matrices tienen el mismo tamaño
+    columnas = filas;
+
+    cout << "Ingrese los elementos de la matriz A:" << endl;
+    for (int i = 0; i < filas; ++i) {
+        for (int j = 0; j < columnas; ++j) {
+            cout << "Matriz A[" << i << "][" << j << "]: ";
+            cin >> matriz_a[i][j];
+        }
+    }
+
+    cout << "Ingrese los elementos de la matriz B:" << endl;
+    for (int i = 0; i < filas; ++i) {
+        for (int j = 0; j < columnas; ++j) {
+            cout << "Matriz B[" << i << "][" << j << "]: ";
+            cin >> matriz_b[i][j];
+        }
+    }
+
+    while (true) {
+        cout << "\nMenú Principal:" << endl;
+        cout << "1. Matriz traspuesta" << endl;
+        cout << "2. Matriz inversa" << endl;
+        cout << "3. Suma de dos matrices" << endl;
+        cout << "4. Multiplicación de dos matrices" << endl;
+        cout << "5. Verificar si una matriz es mágica" << endl;
+        cout << "6. Cargar una matriz cuadrada de forma circular" << endl;
+        cout << "7. Cargar una matriz cuadrada por diagonales" << endl;
+        cout << "8. Salir" << endl;
+
+        int opcion;
+        cout << "Ingrese el número de la opción deseada: ";
+        cin >> opcion;
+
+        switch (opcion) {
+            case 1:
+                matriz_traspuesta(matriz_a, filas, columnas);
+                break;
+            case 2: {
+                double inversa[MAX_SIZE][MAX_SIZE];
+                if (calcular_inversa(matriz_a, filas, columnas, inversa)) {
+                    cout << "\nMatriz Inversa:" << endl;
+                    mostrar_matriz(inversa, filas, columnas);
+                }
+                break;
+            }
+            case 3:
+                suma_matrices(matriz_a, matriz_b, filas, columnas);
+                break;
+            case 4:
+                multiplicacion_matrices(matriz_a, matriz_b, filas, columnas, filas, columnas);
+                break;
+            case 5:
+                if (es_matriz_magica(matriz_a, filas)) {
+                    cout << "\nLa matriz A es mágica." << endl;
+                } else {
+                    cout << "\nLa matriz A no es mágica." << endl;
+                }
+                break;
+            case 6:
+                cargar_matriz_circular(matriz_a, filas);
+                cout << "\nMatriz cargada de forma circular:" << endl;
+                mostrar_matriz(matriz_a, filas, columnas);
+                break;
+            case 7:
+                cargar_matriz_diagonales(matriz_a, filas);
+                cout << "\nMatriz cargada por diagonales:" << endl;
+                mostrar_matriz(matriz_a, filas, columnas);
+                break;
+            case 8:
+                cout << "¡Hasta luego!" << endl;
+                return 0;
+            default:
+                cout << "Opción no válida. Por favor, ingrese un número del 1 al 8." << endl;
+        }
+    }
+  return 0;  
+}
+
+
+
+void mostrar_matriz(double matriz[MAX_SIZE][MAX_SIZE], int filas, int columnas) {
+    for (int i = 0; i < filas; ++i) {
+        for (int j = 0; j < columnas; ++j) {
+            cout << setw(8) << matriz[i][j];
+        }
+        cout << endl;
+    }
+}
+
+void matriz_traspuesta(int matriz[MAX_SIZE][MAX_SIZE], int filas, int columnas) {
+    int traspuesta[MAX_SIZE][MAX_SIZE];
+
+    for (int i = 0; i < filas; ++i) {
+        for (int j = 0; j < columnas; ++j) {
+            traspuesta[j][i] = matriz[i][j];
+        }
+    }
+
+    cout << "\nMatriz Traspuesta:" << endl;
+    mostrar_matriz(traspuesta, columnas, filas);
+}
+
+bool calcular_inversa(int matriz[MAX_SIZE][MAX_SIZE], int filas, int columnas, double inversa[MAX_SIZE][MAX_SIZE]) {
+    double determinante = 0;
+
+    if (filas != columnas) {
+        cout << "La matriz no es cuadrada, no se puede calcular la inversa." << endl;
+        return false;
+    }
+
+    for (int i = 0; i < filas; ++i) {
+        double submatriz[MAX_SIZE - 1][MAX_SIZE - 1];
+        for (int j = 0; j < filas - 1; ++j) {
+            for (int k = 0; k < columnas - 1; ++k) {
+                submatriz[j][k] = matriz[j + (j >= i)][k + 1];
+            }
+        }
+        determinante += matriz[i][0] * pow(-1, i) * calcular_determinante(submatriz, filas - 1, columnas - 1);
+    }
+
+    if (determinante == 0) {
+        cout << "La matriz no es invertible, su determinante es cero." << endl;
+        return false;
+    }
+
+    for (int i = 0; i < filas; ++i) {
+        for (int j = 0; j < columnas; ++j) {
+            double submatriz[MAX_SIZE - 1][MAX_SIZE - 1];
+            for (int m = 0; m < filas - 1; ++m) {
+                for (int n = 0; n < columnas - 1; ++n) {
+                    submatriz[m][n] = matriz[m + (m >= i)][n + (n >= j)];
+                }
+            }
+            inversa[j][i] = pow(-1, i + j) * calcular_determinante(submatriz, filas - 1, columnas - 1) / determinante;
+        }
+    }
+
+    return true;
+}
+
+void suma_matrices(int matriz1[MAX_SIZE][MAX_SIZE], int matriz2[MAX_SIZE][MAX_SIZE], int filas, int columnas) {
+    int resultado[MAX_SIZE][MAX_SIZE];
+
+    for (int i = 0; i < filas; ++i) {
+        for (int j = 0; j < columnas; ++j) {
+            resultado[i][j] = matriz1[i][j] + matriz2[i][j];
+        }
+    }
+
+    cout << "\nSuma de dos matrices:" << endl;
+    mostrar_matriz(resultado, filas, columnas);
+}
+
+void multiplicacion_matrices(int matriz1[MAX_SIZE][MAX_SIZE], int matriz2[MAX_SIZE][MAX_SIZE], int filas1, int columnas1, int filas2, int columnas2) {
+    if (columnas1 != filas2) {
+        cout << "No se pueden multiplicar las matrices. El número de columnas de la primera matriz debe ser igual al número de filas de la segunda matriz." << endl;
+        return;
+    }
+
+    int resultado[MAX_SIZE][MAX_SIZE];
+
+    for (int i = 0; i < filas1; ++i) {
+        for (int j = 0; j < columnas2; ++j) {
+            resultado[i][j] = 0;
+            for (int k = 0; k < columnas1; ++k) {
+                resultado[i][j] += matriz1[i][k] * matriz2[k][j];
+            }
+        }
+    }
+
+    cout << "\nMultiplicación de dos matrices:" << endl;
+    mostrar_matriz(resultado, filas1, columnas2);
+}
+
+bool es_matriz_magica(int matriz[MAX_SIZE][MAX_SIZE], int n) {
+    int suma_fila = 0;
+    int suma_columna = 0;
+    int suma_diagonal1 = 0;
+    int suma_diagonal2 = 0;
+
+    for (int i = 0; i < n; ++i) {
+        suma_fila += matriz[0][i];
+    }
+
+    for (int i = 0; i < n; ++i) {
+        suma_columna = 0;
+        for (int j = 0; j < n; ++j) {
+            suma_columna += matriz[i][j];
+        }
+
+        if (suma_columna != suma_fila) {
+            return false;
+        }
+    }
+
+    for (int j = 0; j < n; ++j) {
+        suma_columna = 0;
+        for (int i = 0; i < n; ++i) {
+            suma_columna += matriz[i][j];
+        }
+
+        if (suma_columna != suma_fila) {
+            return false;
+        }
+    }
+
+    for (int i = 0; i < n; ++i) {
+        suma_diagonal1 += matriz[i][i];
+    }
+
+    for (int i = 0; i < n; ++i) {
+        suma_diagonal2 += matriz[i][n - i - 1];
+    }
+
+    return (suma_diagonal1 == suma_fila) && (suma_diagonal2 == suma_fila);
+}
+
+void cargar_matriz_circular(int matriz[MAX_SIZE][MAX_SIZE], int n) {
+    int num = 1;
+
+    for (int capa = 0; capa < (n + 1) / 2; ++capa) {
+        for (int i = capa; i < n - capa; ++i) {
+           matriz[capa][i] = num++;
+        }
+        for (int i = capa + 1; i < n - capa; ++i) {
+            matriz[i][n - capa - 1] = num++;
+        }
+        for (int i = n - capa - 2; i >= capa; --i) {
+            matriz[n - capa - 1][i] = num++;
+        }
+        for (int i = n - capa - 2; i > capa; --i) {
+            matriz[i][capa] = num++;
+        }
+    }
+}
+
+void cargar_matriz_diagonales(int matriz[MAX_SIZE][MAX_SIZE], int n) {
+    int num = 1;
+
+    for (int i = 0; i < n; ++i) {
+        matriz[i][i] = num++;
+        if (i < n - 1) {
+            matriz[i][i + 1] = num++;
+            matriz[i + 1][i] = num++;
+        }
+    }
+}
+
+double calcular_determinante(double matriz[MAX_SIZE][MAX_SIZE], int filas, int columnas) {
+    if (filas == 1 && columnas == 1) {
+        return matriz[0][0];
+    }
+
+    if (filas == 2 && columnas == 2) {
+        return matriz[0][0] * matriz[1][1] - matriz[0][1] * matriz[1][0];
+    }
+
+    double determinante = 0;
+    for (int j = 0; j < columnas; ++j) {
+        double submatriz[MAX_SIZE][MAX_SIZE];
+        for (int m = 1; m < filas; ++m) {
+            for (int n = 0; n < columnas; ++n) {
+                if (n < j) {
+                    submatriz[m - 1][n] = matriz[m][n];
+                } else if (n > j) {
+                    submatriz[m - 1][n - 1] = matriz[m][n];
+                }
+            }
+        }
+        determinante += pow(-1, j) * matriz[0][j] * calcular_determinante(submatriz, filas - 1, columnas - 1);
+    }
+
+    return determinante;
+}
